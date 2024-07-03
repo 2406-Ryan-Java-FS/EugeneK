@@ -18,6 +18,7 @@ target/
 *.iws
 *.iml
 *.ipr
+UserServiceImplTest.java
 
 ### NetBeans ###
 /nbproject/private/

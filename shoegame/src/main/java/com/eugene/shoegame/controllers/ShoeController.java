@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/shoes")
+@RequestMapping("/shoegame/users/{userId}/shoes")
 public class ShoeController {
 
     private final ShoeService shoeService;
@@ -21,36 +21,36 @@ public class ShoeController {
     }
 
     @PostMapping
-    public ResponseEntity<ShoeDTO> createShoe(@RequestBody ShoeDTO  shoeDTO){
-        ShoeDTO createdShoe = shoeService.createShoe(shoeDTO);
+    public ResponseEntity<ShoeDTO> createShoe(@PathVariable Long userId, @RequestBody ShoeDTO shoeDTO){
+        ShoeDTO createdShoe = shoeService.createShoe(userId, shoeDTO);
         return new ResponseEntity<>(createdShoe, HttpStatus.CREATED);
 
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShoeDTO> getShoeById(@PathVariable Long id){
-        ShoeDTO shoeDTO = shoeService.getShoeById(id);
+    public ResponseEntity<ShoeDTO> getShoeById(@PathVariable Long userId, @PathVariable Long id){
+        ShoeDTO shoeDTO = shoeService.getShoeById(userId, id);
         return ResponseEntity.ok(shoeDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<ShoeDTO>> getAllShoes(){
-        List<ShoeDTO> allShoes = shoeService.getAllShoes();
+    public ResponseEntity<List<ShoeDTO>> getAllShoesByUser(@PathVariable Long userId){
+        List<ShoeDTO> allShoes = shoeService.getAllShoesByUser(userId);
         return ResponseEntity.ok(allShoes);
     }
 
     @PutMapping("/{id}")
     // the @PathVariable defines the shoe id passed in the endpoint URL.
     // The @RequestBody defines the updated set of data needed to be passed as JSON to update an existing shoe's data.
-    public ResponseEntity<ShoeDTO> updateShoe(@PathVariable Long id, @RequestBody ShoeDTO shoeDTO){
-        ShoeDTO updatedShoe = shoeService.updateShoe(id, shoeDTO);
+    public ResponseEntity<ShoeDTO> updateShoe(@PathVariable Long userId, @PathVariable Long id, @RequestBody ShoeDTO shoeDTO){
+        ShoeDTO updatedShoe = shoeService.updateShoe(userId, id, shoeDTO);
         return ResponseEntity.ok(updatedShoe);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ShoeDTO> deleteShoe(@PathVariable Long id){
-        shoeService.deleteShoe(id);
+    public ResponseEntity<ShoeDTO> deleteShoe(@PathVariable Long userId, @PathVariable Long id){
+        shoeService.deleteShoe(userId, id);
         return ResponseEntity.noContent().build();
     }
 
